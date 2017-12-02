@@ -1,0 +1,9 @@
+<ul>
+    <div *ngFor="let course of campaignsObservable | async">
+        <ngb-alert type="info" [dismissible]="false">
+            <h3><a href="#">{{campaign.name}}</a> </h3>
+            <p>{{campaign.description}}</p>
+
+        </ngb-alert>
+    </div>
+</ul>
