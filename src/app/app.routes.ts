@@ -8,7 +8,7 @@ import { AuthGuard } from './core/auth.guard';
 //import { SignupComponent } from './signup/signup.component';
 //import { EmailComponent } from './email/email.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-
+import { CampaignComponent } from './campaign/campaign.component'
 import { CampaignListComponent } from './campaign/campaign-list/campaign-list.component';
 
 export const router: Routes = [
@@ -19,6 +19,7 @@ export const router: Routes = [
 
     //{ path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard] }
     { path: 'user-profile', component: UserProfileComponent },
+    { path: 'campaign/:id', component: CampaignComponent },
     { path: 'campaign-list', component: CampaignListComponent, canActivate: [AuthGuard] }
 ]
 

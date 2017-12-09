@@ -1,10 +1,35 @@
-<h2>My Campaigns</h2>
-<ul>
-    <div *ngFor="let campaign of campaigns$ | async">
-        <ngb-alert type="info" [dismissible]="false">
-            <h3><a routerLink="/campaign/">{{campaign.name}}</a> </h3>
-            <p>{{campaign.description}}</p>
-            <p>{{campaign.owner}}</p>
-        </ngb-alert>
+<h2>My Campaigns
+  <button *ngIf="!showAdd" type="button" class="btn btn-default btn-sm" (click)="showAdd=!showAdd">
+            <span class="glyphicon glyphicon-plus"></span> New
+  </button>
+</h2>
+
+<div *ngIf="showAdd" class="form">
+  <div class="form-group">
+    <label for="campaignName">Campaign Name</label>
+    <input id="campaignName" [(ngModel)]="name" placeholder="Lost Mines of Wherever" class="form-control">
+    <label for="campaignDescription">Description</label>
+    <textarea id="campaignDescription" [(ngModel)]="description" placeholder="Campaign description" class="form-control "></textarea>
+  </div>
+  <button class="btn btn-primary" (click)="createCampaign()" [disabled]="name?.length < 2 || content?.length > 200">
+    Add Campaign
+  </button>
+  <button class="btn btn-danger" (click)="showAdd=false" >
+    Nevermind
+  </button>
+
+</div>
+<br>
+<div class="card-deck-wrapper">
+<div class="card-deck" >
+    <div *ngFor="let campaign of campaigns$ | async" class="card mb-4" style="min-width: 20rem;" >
+      <div class="card-body">
+        <h4 class="card-title">{{campaign.name}}</h4>
+        <p class="card-text">{{campaign.description}}</p>
+        <a class="btn btn-primary" routerLink="/campaign/{{campaign.id}}">Go</a>
+
+         <button class="btn btn-danger" (click)='deleteCampaign(campaign?.id)'>Delete</button>
+     </div>
     </div>
-</ul>
+</div>
+</div>

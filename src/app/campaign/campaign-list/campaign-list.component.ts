@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { CampaignService } from './../campaign.service';
 import { Campaign } from './../campaign.service';
 import { AuthService } from './../../core/auth.service';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'campaign-list',
   templateUrl: './campaign-list.component.html',
@@ -18,11 +19,22 @@ export class CampaignListComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.campaigns$ = this.campaignService.getSnapshot();
+    // this.campaigns$ = this.campaignService.getSnapshot();
+
     this.auth.user.subscribe(user => {
-      this.campaigns$ = this.campaignService.getUserCampaigns(user.uid);
+      // this.campaigns$ = this.campaignService.getUserCampaigns(user.uid);
+      this.campaigns$ = this.campaignService.getSnapshot();
     })
   }
 
+  createCampaign(){
+    this.campaignService.createCampaign(this.name, this.description);
+    this.name = '';
+    this.description = '';
+  }
+  deleteCampaign(id){
+    this.campaignService.deleteCampaign(id);
+    //console.log(this.campaignService.getCampaign(id));
+  }
 
 }

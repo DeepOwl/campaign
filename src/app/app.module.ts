@@ -8,7 +8,7 @@ import { environment } from './../environments/environment';
 import { AppComponent } from './app.component';
 import { AppNavbarComponent } from './app-navbar/app-navbar.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
-
+import { FormsModule } from '@angular/forms';
 import { CoreModule }from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component'}
 import { routes } from './app.routes';
@@ -30,6 +30,7 @@ import { CampaignComponent } from './campaign/campaign.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     CoreModule,
     NgbModule.forRoot(),
