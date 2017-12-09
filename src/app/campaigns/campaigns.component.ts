@@ -1,19 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { CampaignService } from './campaign.service';
+import { Campaign } from './campaign.service';
+import { AuthService } from './../core/auth.service';
 @Component({
-  selector: 'app-campaigns',
+  selector: 'campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.css']
 })
 export class CampaignsComponent implements OnInit {
-  campaignsObservable: Observable<any[]>;
-  constructor(private db: AngularFireDatabase) { }
+
+  campaigns$: Observable<Campaign[]>;
+
+  constructor(private auth: AuthService, private campaignService: CampaignService) {
+
+  }
+
   ngOnInit() {
-    this.campaignsObservable = this.getCampaigns('/campaigns');
+    //this.campaigns$ = this.campaignService.getSnapshot();
+    this.auth.user.subscribe(user => {
+      this.campaigns$ = this.campaignService.getUserCampaigns(user.uid);
+    })
   }
-  getCampaigns(listPath): Observable<any[]> {
-    return this.db.list(listPath).valueChanges();
-  }
+
 
 }

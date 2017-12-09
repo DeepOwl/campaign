@@ -14,6 +14,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component'}
 import { routes } from './app.routes';
 import { LoginComponent } from './login/login.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { CampaignService } from './campaigns/campaign.service';
+import { CampaignComponent } from './campaign/campaign.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +25,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     UserProfileComponent,
     CampaignsComponent,
     LoginComponent,
+    CampaignComponent,
 
   ],
   imports: [
@@ -31,7 +35,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     NgbModule.forRoot(),
     routes
   ],
-  providers: [/*AuthService*/],
+  providers: [CampaignService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

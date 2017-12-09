@@ -1,9 +1,10 @@
+<h2>My Campaigns</h2>
 <ul>
-    <div *ngFor="let course of campaignsObservable | async">
+    <div *ngFor="let campaign of campaigns$ | async">
         <ngb-alert type="info" [dismissible]="false">
-            <h3><a href="#">{{campaign.name}}</a> </h3>
+            <h3><a routerLink="/campaign/">{{campaign.name}}</a> </h3>
             <p>{{campaign.description}}</p>
-
+            <p>{{campaign.owner}}</p>
         </ngb-alert>
     </div>
 </ul>

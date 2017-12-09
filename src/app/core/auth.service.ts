@@ -49,6 +49,22 @@ export class AuthService {
     }
     return userRef.set(data)
   }
+
+
+  // Returns true if user is logged in
+  get authenticated(): boolean {
+    return this.user !== null;
+  }
+
+  // Returns current user data
+  get currentUser(): any {
+    return this.authenticated ? this.user : null;
+  }
+  // Returns current user UID
+  get currentUserId(): string {
+    return this.authenticated ? this.authState.uid : '';
+  }
+
   signOut() {
     this.afAuth.auth.signOut().then(() => {
         this.router.navigate(['/']);
