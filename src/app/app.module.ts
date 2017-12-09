@@ -13,8 +13,8 @@ import { CoreModule }from './core/core.module';
 import { UserProfileComponent } from './user-profile/user-profile.component'}
 import { routes } from './app.routes';
 import { LoginComponent } from './login/login.component';
-import { CampaignsComponent } from './campaigns/campaigns.component';
-import { CampaignService } from './campaigns/campaign.service';
+import { CampaignListComponent } from './campaign/campaign-list/campaign-list.component';
+import { CampaignService } from './campaign/campaign.service';
 import { CampaignComponent } from './campaign/campaign.component';
 
 @NgModule({
@@ -23,7 +23,7 @@ import { CampaignComponent } from './campaign/campaign.component';
     AppNavbarComponent,
     CoursesListComponent,
     UserProfileComponent,
-    CampaignsComponent,
+    CampaignListComponent,
     LoginComponent,
     CampaignComponent,
 
