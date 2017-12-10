@@ -19,10 +19,7 @@ export class CampaignListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.campaigns$ = this.campaignService.getSnapshot();
-
     this.auth.user.subscribe(user => {
-      // this.campaigns$ = this.campaignService.getUserCampaigns(user.uid);
       this.campaigns$ = this.campaignService.getSnapshot();
     })
   }
@@ -31,6 +28,7 @@ export class CampaignListComponent implements OnInit {
     this.campaignService.createCampaign(this.name, this.description);
     this.name = '';
     this.description = '';
+    this.showAdd = false;
   }
   deleteCampaign(id){
     this.campaignService.deleteCampaign(id);

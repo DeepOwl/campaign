@@ -15,7 +15,8 @@ import { routes } from './app.routes';
 import { LoginComponent } from './login/login.component';
 import { CampaignListComponent } from './campaign/campaign-list/campaign-list.component';
 import { CampaignService } from './campaign/campaign.service';
-import { CampaignComponent } from './campaign/campaign.component';
+import { CampaignComponent , KeysPipe } from './campaign/campaign.component';
+import { DndModule } from 'ng2-dnd';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { CampaignComponent } from './campaign/campaign.component';
     CampaignListComponent,
     LoginComponent,
     CampaignComponent,
-
+    KeysPipe
   ],
   imports: [
     BrowserModule,
@@ -34,9 +35,12 @@ import { CampaignComponent } from './campaign/campaign.component';
     AngularFireModule.initializeApp(environment.firebase),
     CoreModule,
     NgbModule.forRoot(),
+    DndModule.forRoot(),
+
     routes
   ],
   providers: [CampaignService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

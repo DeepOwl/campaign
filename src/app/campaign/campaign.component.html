@@ -1,3 +1,45 @@
-<p>
-  campaign works!
-</p>
+<div *ngIf="campaign">
+  <h2>{{campaign.name}}</h2>
+
+  <h3>Things
+  <button *ngIf="!showAdd" type="button" class="btn btn-default btn-sm" (click)="showAdd=!showAdd">
+            <span class="glyphicon glyphicon-plus"></span> New
+  </button>
+  </h3>
+
+  <div *ngIf="showAdd" class="form">
+    <div class="form-group">
+      <label for="entityName">Name</label>
+      <input id="entityName" [(ngModel)]="name" placeholder="Gundren Rockseeker" class="form-control">
+      <label for="entityNickname">Nickname</label>
+      <input id="entityNickname" [(ngModel)]="nickname" placeholder="Dwarven Prospector" class="form-control">
+      <label for="entityDescription">Description</label>
+      <textarea id="entityDescription" [(ngModel)]="description" placeholder="entity description" class="form-control "></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="createEntity()" [disabled]="name?.length < 2 || content?.length > 200">
+      Add Thing
+    </button>
+    <button class="btn btn-danger" (click)="showAdd=false" >
+      Nevermind
+    </button>
+
+  </div>
+  <br>
+  </div>
+  <div class="card-deck-wrapper">
+    <div class="card-deck" >
+        <div *ngFor="let entity of entities$ | async" class="card mb-4 panel" style="min-width: 20rem;"
+          dnd-draggable [dragEnabled]="true" [dragData]="entity">
+
+          <div class="card-body"
+            dnd-droppable (onDropSuccess)="transferDataSuccess($event, entity)">
+            <h4 class="card-title">{{entity.name}}</h4>
+            <p class="card-text">{{entity.nickname}}</p>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let relation of entity.relationships" class="list-group-item">{{relation.relationship}} {{relation.dest}}</li>
+            </ul>
+            
+         </div>
+        </div>
+    </div>
+  </div>

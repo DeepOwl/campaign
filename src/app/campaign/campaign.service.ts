@@ -7,9 +7,19 @@ import { map } from 'rxjs/operators';
 import { AuthService} from './../core/auth.service'
 import { User } from './../core/auth.service'
 export class Campaign {
-  $key: string;
+  id: string;
   name: string;
   description: string;
+}
+
+export class Entity {
+  id: string;
+  name: string;
+  nickname: string;
+  description: string;
+  created_at: any;
+  updated_at: any;
+  relationships: [any];
 }
 
 @Injectable()
@@ -67,18 +77,60 @@ export class CampaignService {
       created_at: new Date().getTime(),
       owner: this.userId;
     };
-    console.log ('adding', campaign);
+
     return this.campaignsCollection.add(campaign);
   }
   deleteCampaign(id:string) {
+    return this.getCampaignDoc(id).delete();
+  }
 
-    //console.log ('removing', campaign);
-    return this.getCampaign(id).delete();
+  // Return an observable list of Campaigns
+  getCampaignDoc(id: string): Observable<Campaign[]> {
+    return this.afs.doc<Campaign>(`campaigns/${id}`);
   }
 
   // Return an observable list of Campaigns
   getCampaign(id: string): Observable<Campaign[]> {
-
-    return this.afs.doc<Campaign>(`campaigns/${id}`);
+    return this.getCampaignDoc(id).valueChanges();
   }
+
+  getEntities(campaign:string):Observable<Entity[]>{
+    console.log("getting entities for", campaign);
+    // return this.getCampaignDoc(campaign).collection('entities').valueChanges();
+    return this.getCampaignDoc(campaign).collection('entities').snapshotChanges().map((actions) => {
+      return actions.map((a) => {
+        const data = a.payload.doc.data() as Entity;
+        console.log(data);
+        data.id = a.payload.doc.id;
+        return data;//{id: a.payload.doc.id, name: data.name, description: data.description, owner:data.owner};
+      });
+    });
+
+  }
+
+
+  createEntity(campaign:string, name:string, nickname:string, description: string) {
+    const entity = {
+      name:name,
+      nickname:nickname,
+      description:description,
+      created_at: new Date().getTime(),
+      updated_at: new Date().getTime(),
+      relationships:[]
+    }
+    return this.getCampaignDoc(campaign).collection('entities').add(entity);
+  }
+
+  addRelationship(campaign:string, entity:Entity, rel:string, target: Entity ){
+    const r = {
+      src:entity.id,
+      relationship:rel,
+      dest:target.id
+    }
+    entity.relationships.push(r);
+    return this.getCampaignDoc(campaign).collection('entities').doc(entity.id).update({'relationships': entity.relationships});
+
+
+  }
+
 }
